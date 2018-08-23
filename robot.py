@@ -4,7 +4,6 @@ import readchar
 import sys
 import subprocess
 
-i = 0
 questions = [
 'Pax, tell me about yourself.' , 
 'Pax, why do you want to do robotics?',
@@ -14,6 +13,8 @@ questions = [
 'Pax, other than me do you have robots at home?',
 'Pax, thank you for letting me interview you. Good luck with robotics.'
 ]
+
+#Read in the robot ascii file
 f = open("robot2.ascii","r")
 robot = f.read()
 f.close()
@@ -24,12 +25,14 @@ def clear_screen():
   print('\033c')
   print('\x1bc')
 
+#print the robot ascii image
 def print_robot():
   print robot
 
-def intro_robot():
+def intro():
     speak("My name is Xap (that's Pax spelled backwards). I am a robot built using the Python programming language. I am going to interview Pax today about robotics.")
 
+#print a string as the robot is talking
 def slow_print(s):
     j = 0
     while j < len(s):
@@ -40,27 +43,20 @@ def slow_print(s):
       time.sleep(0.07)
     print
 
+#Use the macs 'say' command to speak
+#Each time we speak, clear the previous screen, redraw robot, and 
 def speak(s):
-  #speak = "say " + s
-  #os.system(speak)
   clear_screen()
   print_robot()
   subprocess.Popen(['say', s])
   slow_print(s)
 
-def intro():
-  print_robot()
-  intro_robot()
-
-
-clear_screen()
+#Introduce the robot
 intro()
-
-while True:
-  #time.sleep(0.1)
+#Loop over questions 
+for q in questions:
+  #Wait for a key to move on
   readchar.readchar()
-  #clear_screen()
-  speak(questions[i])
-  #slow_print(questions[i])
-  i += 1 
+  #Have the robot ask the question
+  speak(q)
 
